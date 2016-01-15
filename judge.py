@@ -11,7 +11,7 @@ from collections import defaultdict
 
 def run(code, inputfile, outputfile, hwname, iflinux):
     # print "on the code "+code
-    tp = "timeout 0.1 " if iflinux else "gtimeout 0.1 " ## timeout prefix in commands
+    tp = "timeout 1 " if iflinux else "gtimeout 1 " ## timeout prefix in commands
     if hwname == "hw1":
         command_runlist = [
             "cat "+inputfile+" | "+tp+"python "+code+" > test.c",

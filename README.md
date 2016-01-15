@@ -3,6 +3,10 @@ Auto Judge for Translators Course
 
 This is an Auto Judge system for the grading of Translators course.
 
+For more information of the course, please visit the site below.
+
+http://classes.engr.oregonstate.edu/eecs/winter2016/cs480/
+
 Install
 ------
 
@@ -22,7 +26,7 @@ Usage
 * (for students) Put your python file into the directory "submissions_hwX" and rename it to "yourname_hwX.py".
 
 ~~~
-cp hwX.py submissions_hwX/yourname_hwX.py
+$ cp hwX.py submissions_hwX/yourname_hwX.py
 ~~~
 
 * Create/Edit test cases in the directory "testcases_hwX". Note that the test cases must be paired.

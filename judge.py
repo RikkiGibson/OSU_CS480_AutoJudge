@@ -6,12 +6,13 @@
 ## For more information of the course, please visit
 ## http://classes.engr.oregonstate.edu/eecs/winter2016/cs480/
 ########################################################################
-import sys, os, filecmp
+import sys, os
 from collections import defaultdict
 
-def run(code, inputfile, outputfile, hwname, iflinux):
+def run(code, inputfile, outputfile, hwname):
     # print "on the code "+code
-    tp = "timeout 1 " if iflinux else "gtimeout 1 " ## timeout prefix in commands
+    ifgtimeout = os.system("gtimeout --help >null 2>null2")
+    tp = "gtimeout 1 " if ifgtimeout == 0 else "timeout 1 " ## timeout prefix in commands
     if hwname == "hw1":
         command_runlist = [
             "cat "+inputfile+" | "+tp+"python "+code+" > test.c",
@@ -51,9 +52,6 @@ if __name__ == "__main__":
 
     assert (len(sys.argv) >= 2)
     hwname = sys.argv[1]
-    iflinux = False
-    if len(sys.argv) > 2 and (sys.argv[2]).lower() == "linux":
-        iflinux = True
     
     testcasedir = "testcases_"+hwname
     submissiondir = "submissions_"+hwname
@@ -83,7 +81,6 @@ if __name__ == "__main__":
                                            testcasedir+"/"+testcase+".in",
                                            testcasedir+"/"+testcase+".out",
                                            hwname,
-                                           iflinux
                 )
                 print "comment: " + onecomment
                 score += onescore

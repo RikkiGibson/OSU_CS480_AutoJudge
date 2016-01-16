@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "judge.py", line 61, in <module>
-    submissionfiles = [f for f in os.listdir(submissiondir+"/") if os.path.isfile(submissiondir+"/"+f)]
-OSError: [Errno 2] No such file or directory: 'submissions_hw1/'

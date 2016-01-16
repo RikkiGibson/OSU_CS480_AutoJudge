@@ -16,7 +16,7 @@ Install
 $ brew install coreutils
 ~~~
 
-* For Linux/CentOS user, check "timeout" command.
+* For Linux/CentOS user, check "timeout" command if you don't have HomeBrew.
 
 Usage
 ------
@@ -34,8 +34,7 @@ $ cp hwX.py submissions_hwX/yourname_hwX.py
 * Run this to check the grades. The grades are also in the file "grades_hwX".
 
 ~~~
-Mac User $ sh exe.sh hwX
-Others   $ sh exe.sh hwX linux
+$ sh exe.sh hwX
 ~~~
 
 Creating/Contributing Test Cases

@@ -28,14 +28,17 @@ def run(code, inputfile, outputfile, hwname):
     
     if result_run == 0:
         if hwname == "hw1":
-            command_compare = "diff test.out_c "+outputfile
+            command_compare = "diff -bd test.out_c "+outputfile
         else:
             ## TODO: may change command_compare for future homworks
             ## like: ignoring blank lines, etc..
             pass
         result_compare = os.system(command_compare)
         if result_compare == 0:
-            return 1, "passed! "
+            if os.system("diff test.out_c "+outputfile) == 0:
+                return 1, "passed! "
+            else:
+                return 0.9, "presentation error!"
         else:
             return 0, "result doesn't match.."
     elif result_run == 31744:
@@ -53,19 +56,20 @@ if __name__ == "__main__":
     assert (len(sys.argv) >= 2)
     hwname = sys.argv[1]
     
-    testcasedir = "testcases_"+hwname
-    submissiondir = "submissions_"+hwname
+    testcasedir = "testcases_%s/" % hwname
+    submissiondir = "submissions_%s/" % hwname
 
-    submissionfiles = [f for f in os.listdir(submissiondir+"/") if os.path.isfile(submissiondir+"/"+f)]
+    submissionfiles = [f for f in os.listdir(submissiondir) if os.path.isfile(submissiondir + f)]
 
     ## testcasefiles: without ".in" or ".out"
-    testcasefiles = list(set([f.rsplit(".", 1)[0] for f in os.listdir(testcasedir+"/")
-                         if os.path.isfile(os.path.join(testcasedir+"/", f))]))
-    testcasefiles.sort()
+    testcasefiles = sorted(set([f.rsplit(".", 1)[0] for f in os.listdir(testcasedir)
+                                if f[0] != "." and os.path.isfile(testcasedir + f)]))
     
     fullscore = len(testcasefiles)
     
     gradedict = defaultdict(lambda : (0, "No '.py' file detected.."))
+
+    os.system("mkdir Excellent")
     
     for file in submissionfiles:
         studentname = file.split("_", 1)[0]
@@ -74,18 +78,22 @@ if __name__ == "__main__":
             print "------"
             print "File "+file
             score = 0
+            real_file = submissiondir+file
             commentlist = []
             for testcase in testcasefiles:
                 print "Testcase " + testcase
-                onescore, onecomment = run(submissiondir+"/"+file,
-                                           testcasedir+"/"+testcase+".in",
-                                           testcasedir+"/"+testcase+".out",
+                onescore, onecomment = run(real_file,
+                                           testcasedir+testcase+".in",
+                                           testcasedir+testcase+".out",
                                            hwname,
                 )
                 print "comment: " + onecomment
                 score += onescore
                 commentlist.append(testcase+":"+onecomment)
             gradedict[studentname] = (score, "\n".join(commentlist))
+            if score == fullscore:
+                os.system("cp -pr %s excellent/" % real_file)
+                
     for file in submissionfiles:
         studentname = file.split("_", 1)[0]
         if studentname not in gradedict:
@@ -93,12 +101,29 @@ if __name__ == "__main__":
 
     clear()
 
-    fout = open("grades_"+hwname, "w")
     students = [x for x in gradedict]
     students.sort()
+
+    ## print grades with comments
+    fout = open("grades_"+hwname, "w")
     for studentname in students:
         score, comment = gradedict[studentname]
         print >> fout, "------"
-        print >> fout, studentname, score, "/", fullscore
+        print >> fout, studentname, score, "/", fullscore,
+        if score == fullscore:
+            print >> fout, "excellent!"
+        elif score >= fullscore * .8:
+            print >> fout, "decent job!"
+        else:
+            print >> fout
         print >> fout, comment
+    ## histogram stats
+    print >> fout, "======"
+    for i in range(fullscore+1):
+        num = sum([1 for studentname in students if i <= gradedict[studentname][0] < i+1])
+        if i == fullscore:
+            print >> fout, "%d\t%d" % (i, num)
+        else:
+            print >> fout, "%d~%.2f\t%d" % (i, i+.99, num)
     fout.close()
+

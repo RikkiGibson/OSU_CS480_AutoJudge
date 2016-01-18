@@ -1,0 +1,7 @@
+mysum = 0
+for i in range(100): mysum = i + mysum
+
+negsum = 0
+for i in range(5): negsum = -i + negsum
+
+print mysum, negsum

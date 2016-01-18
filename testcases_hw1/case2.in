@@ -1,0 +1,12 @@
+apple = 1
+banana = 2
+print -2+6+2+apple+banana
+print -2+6+2+(apple+banana)
+print -2+(6+2+apple)+banana
+print -2+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana
+apple = -apple
+banana = -2+6+2+apple+banana
+print -2+6+2+apple+banana
+print -2+6+2+(apple+banana)
+print -2+(6+2+apple)+banana
+print -2+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana+6+2+apple+banana

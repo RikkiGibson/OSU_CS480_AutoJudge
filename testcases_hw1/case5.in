@@ -1,0 +1,5 @@
+apple = 5
+banana = 2
+for i in range(-2+apple+banana+(-3)):
+    orange = i + banana
+print apple, banana, orange

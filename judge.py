@@ -20,11 +20,14 @@ def run(code, inputfile, outputfile, hwname):
             "./a.out > test.out_c"
             ]
         command_runlist = map(lambda x:tp+x, command_runlist)
-        command_run = " ; ".join(command_runlist)
+        # command_run = " ; ".join(command_runlist)
+
+        result_run_py = os.system(command_runlist[0])
+        result_compile_c = os.system(command_runlist[1])
+        result_run = os.system(command_runlist[2])
     else:
         ## TODO: may change command_run for future homeworks
         pass
-    result_run = os.system(command_run)
     
     if result_run == 0:
         if hwname == "hw1":
@@ -38,13 +41,15 @@ def run(code, inputfile, outputfile, hwname):
             if os.system("diff test.out_c "+outputfile) == 0:
                 return 1, "passed! "
             else:
-                return 0.9, "presentation error!"
+                return 0.9, "Presentation error. "
         else:
-            return 0, "result doesn't match.."
+            return 0, "Result doesn't match. "
     elif result_run == 31744:
-        return 0, "code running failed: time limit exceeded.."
+        return 0, "Time limit exceeded. "
+    elif result_run_py == 0:
+        return 0, "Compile error in generated C file. "
     else:
-        return 0, "code running failed: runtime error, error code "+str(result_run)+".."
+        return 0, "Runtime error in original Python file. "
 
 def clear():
     command_clear = "rm test.c test.out_c a.out"
@@ -92,7 +97,7 @@ if __name__ == "__main__":
                 commentlist.append(testcase+":"+onecomment)
             gradedict[studentname] = (score, "\n".join(commentlist))
             if score == fullscore:
-                os.system("cp -pr %s excellent/" % real_file)
+                os.system("cp -pr %s Excellent/" % real_file)
                 
     for file in submissionfiles:
         studentname = file.split("_", 1)[0]

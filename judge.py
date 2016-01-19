@@ -13,7 +13,7 @@ def run(code, inputfile, outputfile, hwname):
     # print "on the code "+code
     ifgtimeout = os.system("gtimeout --help >null 2>null2")
     tp = "gtimeout 1 " if ifgtimeout == 0 else "timeout 1 " ## timeout prefix in commands
-    if hwname == "hw1":
+    if hwname in [ "hw1", "hw2" ]:
         command_runlist = [
             "cat "+inputfile+" | "+tp+"python "+code+" > test.c",
             "clang test.c",
@@ -30,7 +30,7 @@ def run(code, inputfile, outputfile, hwname):
         pass
     
     if result_run == 0:
-        if hwname == "hw1":
+        if hwname in [ "hw1", "hw2" ]:
             command_compare = "diff -bd test.out_c "+outputfile
         else:
             ## TODO: may change command_compare for future homworks

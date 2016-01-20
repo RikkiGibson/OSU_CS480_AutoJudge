@@ -49,7 +49,7 @@ def run(code, inputfile, outputfile, hwname):
                 "diff -bd test1 test2"
                 ]
             if os.system("; ".join(command_runlist)) == 0:
-                return 0.7, "Major presentation error."
+                return 0.5, "Major presentation error."
             else:
                 return 0, "Result doesn't match. "
             

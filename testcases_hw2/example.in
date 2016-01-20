@@ -14,7 +14,7 @@ if 1 < banana < apple < 7 < 16+9:
         carrot = doughnut - 1
 print carrot, doughnut
 
-print 3 < apple > 2,  -apple <> banana -8
+print 3 < apple > 2,  -apple <> banana + 8
 
 sum_0 = 0
 sum_1 = 0

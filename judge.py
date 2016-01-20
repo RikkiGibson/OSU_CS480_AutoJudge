@@ -29,7 +29,7 @@ def run(code, inputfile, outputfile, hwname):
         ## TODO: may change command_run for future homeworks
         pass
     
-    if result_run == 0:
+    if result_run_py == 0 and result_compile_c == 0 and result_run == 0:
         if hwname in [ "hw1", "hw2" ]:
             command_compare = "diff -bd test.out_c "+outputfile
         else:
@@ -43,7 +43,16 @@ def run(code, inputfile, outputfile, hwname):
             else:
                 return 0.9, "Presentation error. "
         else:
-            return 0, "Result doesn't match. "
+            command_runlist = [
+                "cat test.out_c | tr '\\n' ' ' > test1",
+                "cat %s | tr '\\n' ' ' > test2" % outputfile,
+                "diff -bd test1 test2"
+                ]
+            if os.system("; ".join(command_runlist)) == 0:
+                return 0.7, "Major presentation error."
+            else:
+                return 0, "Result doesn't match. "
+            
     elif result_run == 31744:
         return 0, "Time limit exceeded. "
     elif result_run_py == 0:
@@ -52,7 +61,7 @@ def run(code, inputfile, outputfile, hwname):
         return 0, "Runtime error in original Python file. "
 
 def clear():
-    command_clear = "rm test.c test.out_c a.out"
+    command_clear = "rm test.c test.out_c a.out test1 test2"
     result_clear = os.system(command_clear)
     return 0
 

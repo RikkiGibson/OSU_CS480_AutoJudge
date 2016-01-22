@@ -1,0 +1,8 @@
+apple = 2
+pear = 3 < 2
+if (3 > 2): apple = 5; print apple, pear
+for i in range(apple): apple = apple + 1; print apple
+print i, apple
+banana = 3 if apple > 2 else 7
+carrot = 13 if (True if banana > apple else False) else 11
+print apple, banana, carrot

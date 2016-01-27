@@ -54,9 +54,9 @@ def run(code, inputfile, outputfile, hwname):
                 return 0.2, "Result doesn't match. "
             
     elif result_run == 31744:
-        return 0.2, "Time limit exceeded. "
+        return 0, "Time limit exceeded. "
     elif result_run_py == 0:
-        return 0.2, "Compile error in generated C file. "
+        return 0, "Compile error in generated C file. "
     else:
         return 0, "Runtime error in original Python file. "
 
